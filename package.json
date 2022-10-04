@@ -1,16 +1,12 @@
 {
   "name": "web3-simple-helpers",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Basic methods that allow to interact with a blockchain",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "0.27.2"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GianfrancoRaselli/web3-simple-helpers.git"
