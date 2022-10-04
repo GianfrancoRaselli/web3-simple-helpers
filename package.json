@@ -9,5 +9,14 @@
   "license": "ISC",
   "dependencies": {
     "axios": "0.27.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GianfrancoRaselli/web3-simple-helpers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GianfrancoRaselli/web3-simple-helpers/issues"
+  },
+  "homepage": "https://github.com/GianfrancoRaselli/web3-simple-helpers#readme"
 }
