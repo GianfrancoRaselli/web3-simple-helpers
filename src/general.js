@@ -19,7 +19,7 @@ const getSplitAddress = (address) => {
   return splitAddress;
 };
 
-modules.exports = {
+module.exports = {
   getErrorMessage,
   getSplitAddress,
 };
