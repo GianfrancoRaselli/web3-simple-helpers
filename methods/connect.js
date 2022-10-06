@@ -11,8 +11,13 @@ const call = async (contractInstance, method, params = [], options, success, err
   } else {
     return contractInstance.methods[method](...params)
       .call(options)
-      .then(success)
-      .catch(error);
+      .then((res) => {
+        if (success) success(res);
+      })
+      .catch((err) => {
+        err.message = getErrorMessage(err);
+        if (error) error(err);
+      });
   }
 };
 
