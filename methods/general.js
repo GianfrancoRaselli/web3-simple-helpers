@@ -2,8 +2,10 @@ const Web3 = require("web3");
 const axios = require("axios");
 
 const getContractInstance = (contract) => {
-  if (contract.provider && contract.abi && contract.address)
-    return new Web3(contract.provider).eth.Contract(contract.abi, contract.address);
+  if (contract.provider && contract.abi && contract.address) {
+    const web3 = new Web3(contract.provider);
+    return new web3.eth.Contract(contract.abi, contract.address);
+  }
   return contract;
 };
 
