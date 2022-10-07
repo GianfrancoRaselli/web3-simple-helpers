@@ -1,5 +1,5 @@
 const Web3 = require("web3");
-const axios = require("axios").default;
+const axios = require("axios");
 
 const getContractInstance = (contract) => {
   if (contract.provider && contract.abi && contract.address)
