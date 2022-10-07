@@ -1,4 +1,11 @@
+const Web3 = require("web3");
 const axios = require("axios").default;
+
+const getContractInstance = (contract) => {
+  if (contract.provider && contract.abi && contract.address)
+    return new Web3(contract.provider).eth.Contract(contract.abi, contract.address);
+  return contract;
+};
 
 const getErrorMessage = (err) => {
   const endIndex = err.message.search("{");
@@ -34,6 +41,7 @@ const fromDateToUnixTimestamp = (date) => {
 };
 
 module.exports = {
+  getContractInstance,
   getErrorMessage,
   getSplitAddress,
   convertEthPrice,

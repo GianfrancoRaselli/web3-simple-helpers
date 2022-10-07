@@ -1,15 +1,18 @@
-const { getErrorMessage } = require("./general");
+const { getContractInstance, getErrorMessage } = require("./general");
 
-const call = async (contractInstance, method, params = [], options, success, error) => {
+const call = async (contract, method, params = [], options, success, error) => {
   if (!(success || error)) {
     try {
-      return await contractInstance.methods[method](...params).call(options);
+      return await getContractInstance(contract)
+        .methods[method](...params)
+        .call(options);
     } catch (err) {
       err.message = getErrorMessage(err);
       throw err;
     }
   } else {
-    return contractInstance.methods[method](...params)
+    return getContractInstance(contract)
+      .methods[method](...params)
       .call(options)
       .then((res) => {
         if (success) success(res);
@@ -21,8 +24,9 @@ const call = async (contractInstance, method, params = [], options, success, err
   }
 };
 
-const transaction = async (contractInstance, method, params = [], sender, options, handleError) => {
+const transaction = async (contract, method, params = [], sender, options, handleError) => {
   try {
+    const contractInstance = getContractInstance(contract);
     await call(contractInstance, method, params, { from: sender, ...options });
     return contractInstance.methods[method](...params).send({ from: sender, ...options });
   } catch (err) {
@@ -31,8 +35,8 @@ const transaction = async (contractInstance, method, params = [], sender, option
   }
 };
 
-const latestEvents = async (contractInstance, event, options, func) => {
-  return contractInstance.events[event]({ fromBlock: "latest", ...options }, func);
+const latestEvents = async (contract, event, options, func) => {
+  return getContractInstance(contract).events[event]({ fromBlock: "latest", ...options }, func);
 };
 
 module.exports = {
