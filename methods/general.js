@@ -17,17 +17,20 @@ const getErrorMessage = (err) => {
 };
 
 const getSplitAddress = (address) => {
-  let splitAddress = "";
+  if (address) {
+    let splitAddress = "";
 
-  for (let i = 0; i < 4; i++) {
-    splitAddress += address.charAt(i);
-  }
-  splitAddress += "...";
-  for (let i = address.length - 4; i < address.length; i++) {
-    splitAddress += address.charAt(i);
-  }
+    for (let i = 0; i < 4; i++) {
+      splitAddress += address.charAt(i);
+    }
+    splitAddress += "...";
+    for (let i = address.length - 4; i < address.length; i++) {
+      splitAddress += address.charAt(i);
+    }
 
-  return splitAddress;
+    return splitAddress;
+  }
+  return "";
 };
 
 const convertEthPrice = async (currency) => {
