@@ -1,11 +1,14 @@
+const { removeInitialUnderscore } = require("./helpers");
 const { getContractInstance, getErrorMessage } = require("./general");
 
 const call = async (contract, method, params = [], options, success, error) => {
   if (!(success || error)) {
     try {
-      return await getContractInstance(contract)
+      const res = await getContractInstance(contract)
         .methods[method](...params)
         .call(options);
+      if (typeof res === "object") removeInitialUnderscore(res);
+      return res;
     } catch (err) {
       err.message = getErrorMessage(err);
       throw err;
@@ -15,7 +18,10 @@ const call = async (contract, method, params = [], options, success, error) => {
       .methods[method](...params)
       .call(options)
       .then((res) => {
-        if (success) success(res);
+        if (success) {
+          if (typeof res === "object") removeInitialUnderscore(res);
+          success(res);
+        }
       })
       .catch((err) => {
         err.message = getErrorMessage(err);
