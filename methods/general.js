@@ -45,6 +45,10 @@ const fromDateToUnixTimestamp = (date) => {
   return date.getTime() / 1000;
 };
 
+const compareAddresses = (address1, address2) => {
+  return address1.toLowerCase() === address2.toLowerCase();
+};
+
 module.exports = {
   getContractInstance,
   getErrorMessage,
@@ -52,4 +56,5 @@ module.exports = {
   convertEthPrice,
   fromUnixTimestampToDate,
   fromDateToUnixTimestamp,
+  compareAddresses,
 };
