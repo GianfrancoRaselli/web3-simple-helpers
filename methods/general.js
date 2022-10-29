@@ -16,6 +16,10 @@ const getErrorMessage = (err) => {
   return message.charAt(0).toUpperCase() + message.slice(1);
 };
 
+const compareAddresses = (address1, address2) => {
+  return address1 && address2 && address1.toLowerCase() === address2.toLowerCase();
+};
+
 const getSplitAddress = (address) => {
   if (address) {
     let splitAddress = "";
@@ -45,16 +49,12 @@ const fromDateToUnixTimestamp = (date) => {
   return date.getTime() / 1000;
 };
 
-const compareAddresses = (address1, address2) => {
-  return address1.toLowerCase() === address2.toLowerCase();
-};
-
 module.exports = {
   getContractInstance,
   getErrorMessage,
+  compareAddresses,
   getSplitAddress,
   convertEthPrice,
   fromUnixTimestampToDate,
   fromDateToUnixTimestamp,
-  compareAddresses,
 };

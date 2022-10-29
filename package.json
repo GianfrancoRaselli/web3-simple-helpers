@@ -1,6 +1,6 @@
 {
   "name": "web3-simple-helpers",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Basic methods that allow to interact with a blockchain",
   "main": "index.js",
   "scripts": {},
