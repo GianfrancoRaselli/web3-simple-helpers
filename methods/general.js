@@ -17,7 +17,9 @@ const getErrorMessage = (err) => {
 };
 
 const compareAddresses = (address1, address2) => {
-  return address1 && address2 && address1.toLowerCase() === address2.toLowerCase();
+  return (
+    address1 && address2 && address1.toLowerCase() === address2.toLowerCase()
+  );
 };
 
 const getSplitAddress = (address) => {
@@ -38,7 +40,11 @@ const getSplitAddress = (address) => {
 };
 
 const convertEthPrice = async (currency) => {
-  return (await axios.get(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=${currency}`)).data[currency];
+  return (
+    await axios.get(
+      `https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=${currency}`
+    )
+  ).data[currency];
 };
 
 const fromUnixTimestampToDate = (unixTimestamp) => {
