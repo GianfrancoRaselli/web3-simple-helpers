@@ -51,6 +51,10 @@ const transaction = async (
   }
 };
 
+const events = async (contract, event, options, func) => {
+  return getContractInstance(contract).events[event]({ ...options }, func);
+};
+
 const latestEvents = async (contract, event, options, func) => {
   return getContractInstance(contract).events[event](
     { fromBlock: "latest", ...options },
@@ -61,5 +65,6 @@ const latestEvents = async (contract, event, options, func) => {
 module.exports = {
   call,
   transaction,
+  events,
   latestEvents,
 };
