@@ -52,11 +52,11 @@ const transaction = async (
 };
 
 const pastEvents = async (contract, event, options, func) => {
-  return getContractInstance(contract).getPastEvents(
-    event,
-    { toBlock: "latest", ...options },
-    func
-  );
+  return getContractInstance(contract)
+    .getPastEvents(event, { toBlock: "latest", ...options })
+    .then(async (res) => {
+      await success(res);
+    });
 };
 
 const latestEvents = async (contract, event, options, func) => {
