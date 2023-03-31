@@ -10,10 +10,13 @@ const getContractInstance = (contract) => {
 };
 
 const getErrorMessage = (err) => {
-  const endIndex = err.message.search("{");
-  let message = err.message;
-  if (endIndex >= 0) message = err.message.substring(0, endIndex);
-  return message.charAt(0).toUpperCase() + message.slice(1);
+  try {
+    return err.message
+      .split("VM Exception while processing transaction: revert ")[1]
+      .split('",')[0];
+  } catch {
+    return "Error al ejecutar la transacción";
+  }
 };
 
 const compareAddresses = (address1, address2) => {
