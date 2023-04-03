@@ -25,12 +25,14 @@ const compareAddresses = (address1, address2) => {
     address2 &&
     typeof address1 === "string" &&
     typeof address2 === "string" &&
+    Web3.utils.isAddress(address1) &&
+    Web3.utils.isAddress(address2) &&
     address1.toLowerCase() === address2.toLowerCase()
   );
 };
 
 const getSplitAddress = (address) => {
-  if (address) {
+  if (Web3.utils.isAddress(address)) {
     let splitAddress = "";
 
     for (let i = 0; i < 4; i++) {
@@ -42,8 +44,9 @@ const getSplitAddress = (address) => {
     }
 
     return splitAddress;
+  } else {
+    throw new Error("No es una address válida");
   }
-  return "";
 };
 
 const convertEthPrice = async (currency) => {
