@@ -10,18 +10,29 @@ const getContractInstance = (contract) => {
 };
 
 const getErrorMessage = (err) => {
-  const endIndex = err.message.search("{");
-  let message = err.message;
-  if (endIndex >= 0) message = err.message.substring(0, endIndex);
-  return message.charAt(0).toUpperCase() + message.slice(1);
+  try {
+    return err.message
+      .split("VM Exception while processing transaction: revert ")[1]
+      .split('",')[0];
+  } catch {
+    return "Error al ejecutar la transacción";
+  }
 };
 
 const compareAddresses = (address1, address2) => {
-  return address1 && address2 && address1.toLowerCase() === address2.toLowerCase();
+  return (
+    address1 &&
+    address2 &&
+    typeof address1 === "string" &&
+    typeof address2 === "string" &&
+    Web3.utils.isAddress(address1) &&
+    Web3.utils.isAddress(address2) &&
+    address1.toLowerCase() === address2.toLowerCase()
+  );
 };
 
 const getSplitAddress = (address) => {
-  if (address) {
+  if (Web3.utils.isAddress(address)) {
     let splitAddress = "";
 
     for (let i = 0; i < 4; i++) {
@@ -33,12 +44,17 @@ const getSplitAddress = (address) => {
     }
 
     return splitAddress;
+  } else {
+    throw new Error("No es una address válida");
   }
-  return "";
 };
 
 const convertEthPrice = async (currency) => {
-  return (await axios.get(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=${currency}`)).data[currency];
+  return (
+    await axios.get(
+      `https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=${currency}`
+    )
+  ).data[currency];
 };
 
 const fromUnixTimestampToDate = (unixTimestamp) => {

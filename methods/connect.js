@@ -17,36 +17,58 @@ const call = async (contract, method, params = [], options, success, error) => {
     return getContractInstance(contract)
       .methods[method](...params)
       .call(options)
-      .then((res) => {
+      .then(async (res) => {
         if (success) {
           if (typeof res === "object") removeInitialUnderscore(res);
-          success(res);
+          await success(res);
         }
       })
-      .catch((err) => {
+      .catch(async (err) => {
         err.message = getErrorMessage(err);
-        if (error) error(err);
+        if (error) await error(err);
       });
   }
 };
 
-const transaction = async (contract, method, params = [], sender, options, handleError) => {
+const transaction = async (
+  contract,
+  method,
+  params = [],
+  sender,
+  options,
+  handleError
+) => {
   try {
     const contractInstance = getContractInstance(contract);
     await call(contractInstance, method, params, { from: sender, ...options });
-    return contractInstance.methods[method](...params).send({ from: sender, ...options });
+    return contractInstance.methods[method](...params).send({
+      from: sender,
+      ...options,
+    });
   } catch (err) {
-    if (handleError) handleError(err);
+    if (handleError) await handleError(err);
     throw err;
   }
 };
 
+const pastEvents = async (contract, event, options, func) => {
+  return getContractInstance(contract)
+    .getPastEvents(event, { toBlock: "latest", ...options })
+    .then(async (res) => {
+      await func(res);
+    });
+};
+
 const latestEvents = async (contract, event, options, func) => {
-  return getContractInstance(contract).events[event]({ fromBlock: "latest", ...options }, func);
+  return getContractInstance(contract).events[event](
+    { fromBlock: "latest", ...options },
+    func
+  );
 };
 
 module.exports = {
   call,
   transaction,
+  pastEvents,
   latestEvents,
 };
