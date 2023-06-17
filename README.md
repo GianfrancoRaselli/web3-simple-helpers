@@ -13,4 +13,5 @@ Basic methods that allow to interact with the Ethereum blockchain.
 ### Connect
 1. async call(contract, method, params = [], options, success, error)
 2. async transaction(contract, method, params = [], sender, options, handleError)
+3. async pastEvents(contract, event, options, func)
 3. async latestEvents(contract, event, options, func)
