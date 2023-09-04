@@ -2,7 +2,7 @@
 
 ## Description
 
-Basic methods that allow to interact with the Ethereum blockchain.
+Basic methods that allow interaction with the Ethereum blockchain.
 
 ## Methods
 
